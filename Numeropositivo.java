@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class Numeropositivo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int numero;
+
+     
+        do {
+            System.out.print("Ingrese un número positivo: ");    // Pedir un número positivo
+            numero = scanner.nextInt();
+
+           
+            if (numero < 0) {      // Comprobar si es menor que cero y mostrar mensaje de error
+                System.out.println("Error,no es un número positivo."); //Si es positivo , salta a la orden de imprimir los 20 sucesivos
+            }
+        } while (numero < 0);
+
+      
+        System.out.println("Los primeros 20 números sucesivos a " + numero + " son:");   // Mostrar los primeros 20 números sucesivos
+        for (int i = 0; i < 20; i++) {
+            System.out.print(numero + i + " ");
+        }
+
+        scanner.close();
+    }
+}
+		
+	
+    
