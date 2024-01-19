@@ -1,4 +1,4 @@
-public class Reto2{
+public class Del10al1DoWhile{
 
 	public static void main(String[] args) {
 	int entero=10;
