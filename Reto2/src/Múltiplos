@@ -39,7 +39,7 @@ for(int i=1;i<=100;i++) {
 			}
 	}
     System.out.println();
-	System.out.print("\rCantidad de múltiplos de 3: " + contadorMultiplos3);
+	System.out.print("\nCantidad de múltiplos de 3: " + contadorMultiplos3);
 	System.out.println();
 	
 	
