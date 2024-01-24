@@ -1,0 +1,49 @@
+package multiplos;
+public class Multiplos2y3 {
+
+	public static void main(String[] args) {
+		
+		//Contadores
+		int contadorMultiplos2=0;
+		int contadorMultiplos3=0;
+		System.out.println("Números múltiplos de 2 entre 1 y 100:");
+	 //Múltiplos de 2 :	
+				
+	for(int i=1;i<=100;i++) {
+		
+		if(i%2==0) {
+		
+		
+		System.out.print(i+" ");
+		contadorMultiplos2++;
+			
+			}
+	}
+	System.out.println();
+	System.out.print("\nCantidad de múltiplos de 2: " + contadorMultiplos2);
+	System.out.println();
+	
+	//Múltiplos de 3:
+	
+	System.out.println("\nNúmeros múltiplos de 3 entre 1 y 100:");
+	
+for(int i=1;i<=100;i++) {
+		
+		if(i%3==0) {
+		
+		
+		System.out.print(i+" ");
+		contadorMultiplos3++;
+		
+		
+			}
+	}
+    System.out.println();
+	System.out.print("\rCantidad de múltiplos de 3: " + contadorMultiplos3);
+	System.out.println();
+	
+	
+		}
+		
+			}
+
