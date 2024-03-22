@@ -1,0 +1,191 @@
+package retoUd6;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
+public class CluedoGame {
+    
+    static String[] characters = {"Amapola", "Celeste", "Prado", "Mora", "Rubio", "Blanco"};
+    static String[] weapons = {"bate", "pistola", "candelabro", "cuchillo", "cuerda", "hacha", "pesa", "veneno", "trofeo"};
+    static String[] rooms = {"casa de invitados", "teatro", "spa", "observatorio", "comedor", "terraza", "salón", "cocina", "vestíbulo"};
+    
+    static ArrayList<Jugador> combinaciones = new ArrayList<>();
+    static final String CLAVE = "123";
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        mostrarMensajeBienvenida();
+        
+        boolean seguirAgregando = true;
+        while (seguirAgregando) {
+            mostrarOpcionesDisponibles();
+            System.out.println("¿Desea añadir algo más? (s/n)");
+            String respuesta = scanner.nextLine();
+            if (respuesta.equalsIgnoreCase("s")) {
+                agregarElementos();
+            } else {
+                seguirAgregando = false;
+                System.out.println("¡Genial, sigamos!");
+            }
+        }
+        
+        System.out.println("Se va a producir la baraja de las cartas..." + "Barajando....");
+        boolean barajadoCorrectamente = barajarCartas();
+        if (barajadoCorrectamente) {
+            System.out.println("Combinación generada con éxito");
+            
+            
+            System.out.println("Si introduces la clave correcta te diré el asesino, arma y lugar..." + "Introduce la contraseña:");
+            String clave = scanner.nextLine();
+            if (clave.equals(CLAVE)) {
+                System.out.println("Clave correcta");
+
+                mostrarCartas();
+            } else {
+                System.out.println("Clave incorrecta. No tiene permiso para ver las cartas.");
+            }
+        } else {
+            System.out.println("Error al barajar las cartas.");
+        }
+        
+        System.out.println("¿Quieres crear una nueva combinación para el juego? (s/n)");
+        String nuevaCombinacion = scanner.nextLine();
+        if (nuevaCombinacion.equalsIgnoreCase("s")) {
+            main(args);
+        } else {
+            guardarInformacion();
+            System.out.println("¡Hasta luego!");
+        }
+    }
+    
+    private static void guardarInformacion() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	static void mostrarMensajeBienvenida() {
+        System.out.println("¡Bienvenido al barajador de cartas del juego Cluedo!");
+        System.out.println("Este programa se encarga de barajar las cartas de forma aleatoria para jugar al Cluedo.");
+    }
+    
+    static void mostrarOpcionesDisponibles() {
+        System.out.println("Personajes disponibles:");
+        for (String character : characters) {
+            System.out.println(character);
+        }
+        
+        System.out.println("\nArmas disponibles:");
+        for (String weapon : weapons) {
+            System.out.println(weapon);
+        }
+        
+        System.out.println("\nHabitaciones disponibles:");
+        for (String room : rooms) {
+            System.out.println(room);
+        }
+    }
+    
+    static void agregarElementos() {
+    	Scanner scanner = new Scanner(System.in);
+        System.out.println("\n¿Qué desea agregar?");
+        System.out.println("1. Personaje");
+        System.out.println("2. Arma");
+        System.out.println("3. Habitación");
+        int opcion = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+        
+        switch (opcion) {
+            case 1:
+                System.out.println("¿Cuántos personajes desea introducir?");
+                int numPersonajes = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
+                for (int i = 0; i < numPersonajes; i++) {
+                    System.out.print("Ingrese el nombre del personaje #" + (i + 1) + ": ");
+                    String nombre = scanner.nextLine();
+                    combinaciones.add(new Jugador(nombre, "", "", ""));
+                }
+                break;
+            case 2:
+                System.out.println("¿Cuántas armas desea introducir?");
+                int numArmas = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
+                for (int i = 0; i < numArmas; i++) {
+                    System.out.print("Ingrese el nombre del arma #" + (i + 1) + ": ");
+                    String arma = scanner.nextLine();
+                    combinaciones.add(new Jugador("", arma, "", ""));
+                }
+                break;
+            case 3:
+                System.out.println("¿Cuántas habitaciones desea introducir?");
+                int numHabitaciones = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
+                for (int i = 0; i < numHabitaciones; i++) {
+                    System.out.print("Ingrese el nombre de la habitación #" + (i + 1) + ": ");
+                    String habitacion = scanner.nextLine();
+                    combinaciones.add(new Jugador("", "", habitacion, ""));
+                }
+                break;
+		default:
+                System.out.println("Opción no válida.");
+                break;
+        } 
+    }
+    
+    static boolean barajarCartas() {
+        try {
+            int indicePersonaje = (int) (Math.random() * characters.length);
+            int indiceArma = (int) (Math.random() * weapons.length);
+            int indiceHabitacion = (int) (Math.random() * rooms.length);
+            String horaPartida = obtenerHoraActual1();
+            combinaciones.add(new Jugador(characters[indicePersonaje], weapons[indiceArma], rooms[indiceHabitacion], horaPartida));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    private static String obtenerHoraActual1() {
+		// TODO Auto-generated method stub
+		return null;
+    }
+
+
+	static void mostrarCartas() {
+        System.out.println("Combinación de cartas:");
+        Jugador ultimaCombinacion = combinaciones.get(combinaciones.size() - 1);
+        System.out.println("Asesino: " + ultimaCombinacion.getNombre());
+        System.out.println("Arma: " + ultimaCombinacion.getArma());
+        System.out.println("Habitación: " + ultimaCombinacion.getHabitacion());
+        System.out.println("Hora de la partida: " + ultimaCombinacion.getHoraPartida());
+    }
+
+    static String obtenerHoraActual() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date fecha = new Date();
+        return sdf.format(fecha);
+    }
+
+    static void guardarInformacion1() {
+        try {
+            FileWriter fileWriter = new FileWriter("combinaciones.txt", true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            for (Jugador jugador : combinaciones) {
+                bufferedWriter.write("Asesino: " + jugador.getNombre() + "\n");
+                bufferedWriter.write("Arma: " + jugador.getArma() + "\n");
+                bufferedWriter.write("Habitación: " + jugador.getHabitacion() + "\n");
+                bufferedWriter.write("Hora de la partida: " + jugador.getHoraPartida() + "\n\n");
+            }
+
+            bufferedWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error al guardar las combinaciones en el archivo.");
+            e.printStackTrace();
+        }
+    }
+}
